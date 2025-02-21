@@ -1,6 +1,7 @@
 import BackButton from "@/components/ui/BackButton";
 import { getUser } from "@/lib/queries/getUser";
 import UserForm from "./components/UserForm";
+import CustomForm from "./components/CustomForm";
 
 export default async function UserFormPage({
   searchParams,
@@ -21,14 +22,12 @@ export default async function UserFormPage({
           </>
         );
       }
-      //put user form component
-      console.log(user)
-      
+      //put user form component 
       return <UserForm user={user}/>
       
     } else {
       //new user form component
-      return <UserForm/>
+      return <CustomForm/>
     }
   } catch (e) {
     if (e instanceof Error) {

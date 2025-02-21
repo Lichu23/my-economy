@@ -10,6 +10,7 @@ export const insertUserSchema = createInsertSchema(user, {
 
 export const selectUserSchema = createSelectSchema(user)
 
-export type insertUserSchemaType = typeof insertUserSchema._type //that's referencing the type from the zod schema so we still need type of here as well
+//that's referencing the type from the zod schema so we still need type of here as well
+export type insertUserSchemaType = typeof insertUserSchema._type 
 
 export type selectUserSchemaType = typeof selectUserSchema._type
