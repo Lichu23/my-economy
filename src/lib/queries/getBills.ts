@@ -3,9 +3,12 @@ import { bills as billsDB } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function getBills(id: number) {
-  const bills = await db
-                          .select()
-                          .from(billsDB)
-                          .where(eq(billsDB.id, id));
-    return bills[0]
+  try {
+    const bills = await db.select().from(billsDB).where(eq(billsDB.userId, id));
+
+    return bills;
+  } catch (error) {
+    console.error("Error fetching bills:", error);
+    throw new Error("Failed to fetch bills");
+  }
 }

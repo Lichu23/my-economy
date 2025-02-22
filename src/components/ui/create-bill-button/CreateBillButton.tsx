@@ -14,5 +14,5 @@ export default function CreateBillButton({ userId }: Props) {
     router.push(`/create-bill/${userId}`);
   };
 
-  return <Button onClick={handleCreateBill}>Create Bill</Button>;
+  return <Button className="rounded-xl shadow-lg hover:bg-black hover:text-white"  size="default" onClick={handleCreateBill}>Create Bill</Button>;
 }

@@ -1,5 +1,5 @@
+import CreateBill from "@/components/ui/create-bill-button/UserBill";
 import React from "react";
-import CreateBill from "../dashboard/components/UserBill";
 
 export default function CreateBillPage() {
   return (
