@@ -4,9 +4,10 @@ import { z } from "zod";
 
 export const insertBillSchema = createInsertSchema(bills, {
     id: z.union([z.number(), z.literal("(New)")]).optional(),
-    title: (schema) => schema.min(1, "title is required"),
     titleBill: (schema) => schema.min(1, "title is required"),
     billValue: (schema) => schema.min(1, "value is required"),
+    billType: (schema) => schema.min(1, "value is required"),
+
 });
 
 export const selectBillSchema = createSelectSchema(bills)

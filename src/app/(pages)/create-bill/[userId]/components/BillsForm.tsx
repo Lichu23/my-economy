@@ -11,6 +11,7 @@ import InputBills from "./InputBIlls";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import SelectBillType from "./SelectBillType";
 
 type BillFormProps = {
   user: selectUserSchemaType;
@@ -20,12 +21,12 @@ type BillFormProps = {
 export default function BillsForm({ user, bill }: BillFormProps) {
   const [isSuccess, setIsSucces] = useState(false);
   console.log(isSuccess);
-  const {toast} = useToast()
+  const { toast } = useToast();
   const defaultValues: Omit<insertBillSchemaType, "id"> = {
     userId: bill?.userId ?? user.id,
-    title: bill?.title ?? "",
     titleBill: bill?.titleBill ?? "",
     billValue: bill?.billValue ?? "",
+    billType: bill?.billType ?? "",
   };
 
   const {
@@ -50,7 +51,7 @@ export default function BillsForm({ user, bill }: BillFormProps) {
         },
         body: JSON.stringify(billDataWithoutId),
       });
-      
+
       if (!response.ok) {
         throw new Error("Error creating bill");
       }
@@ -82,7 +83,6 @@ export default function BillsForm({ user, bill }: BillFormProps) {
     }
   }
 
-
   return (
     <div className="flex flex-col gap-1 sm:px-8">
       <div>
@@ -93,28 +93,24 @@ export default function BillsForm({ user, bill }: BillFormProps) {
       </div>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <InputBills
-          name="title"
-          control={control}
-          label="Title"
-          type="text"
-          error={errors.title}
-        />
-        <InputBills
-          name="titleBill"
-          control={control}
-          label="Title Bill"
-          type="text"
-          error={errors.titleBill}
-        />
-        <InputBills
-          name="billValue"
-          control={control}
-          label="Bill Value"
-          type="text"
-          error={errors.billValue}
-        />
-        <Button type="submit">Submit</Button>
+        <div className="flex flex-col justify-start  gap-5">
+          <InputBills
+            name="titleBill"
+            control={control}
+            label="Title Bill"
+            type="text"
+            error={errors.titleBill}
+          />
+          <InputBills
+            name="billValue"
+            control={control}
+            label="Bill Value"
+            type="text"
+            error={errors.billValue}
+          />
+          <SelectBillType control={control} />
+          <Button variant="default" className="hover:bg-black hover:text-white rounded-xl" type="submit">Submit</Button>
+        </div>
       </form>
     </div>
   );

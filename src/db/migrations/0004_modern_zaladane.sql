@@ -1,0 +1,1 @@
+ALTER TABLE "bills" ALTER COLUMN "bill_type" SET DEFAULT 'other';

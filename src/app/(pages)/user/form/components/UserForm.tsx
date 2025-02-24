@@ -10,7 +10,7 @@ import {
 import { useForm } from "react-hook-form";
 import { InputWithLabel } from "@/components/ui/inputs/InputWithLabel";
 import { SelectWithLabel } from "@/components/ui/inputs/SelectWithLabel";
-import { countries } from "@/constants/CountriesArray";
+import { countries } from "@/constants/PersonalExpenses";
 import { createUser } from "@/services/user/userService";
 
 type UserFormProps = {
