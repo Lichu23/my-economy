@@ -24,10 +24,10 @@ export default function InputBills({
         name={name}
         control={control}
         render={({field}) => 
-        <Input id={name} type={type} {...field} className={`${error?.message} ? border-red-400 : "`} />
+        <Input id={name} type={type} {...field}  />
         }
     />
-    {error?.message && <p className="error">{error.message}</p>}
+    {error?.message && <p className="text-lg text-red-500 font-semibold">{error.message}</p>}
   </div>
 )
 }

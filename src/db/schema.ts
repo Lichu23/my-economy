@@ -27,9 +27,9 @@ export const bills = pgTable("bills", {
   userId: integer("user_id")
     .notNull()
     .references(() => user.id),
-  title: varchar("title").notNull(),
   titleBill: text("title_bill").notNull(),
   billValue: text("bill_value").notNull(),
+  billType: varchar("bill_type").notNull().default("other"), 
   createdAt: timestamp("created_at").notNull().defaultNow(),
   updatedAt: timestamp("updated_at")
     .notNull()
