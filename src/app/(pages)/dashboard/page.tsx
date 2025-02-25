@@ -1,7 +1,7 @@
 import { getUserBills } from "@/services/bills/billService";
-import DashboardWithBills from "./components/Dashboard";
 import DashboardWithoutBills from "./components/DashboardWithoutBills";
 import { getAuthenticatedUser } from "@/utils/getAuthKindeUser";
+import DashboardWithBills from "./components/DashboardWithBills";
 
 export default async function Dashboard() {
   
@@ -16,7 +16,7 @@ export default async function Dashboard() {
   if(bills.length === 0 ) return <DashboardWithoutBills />
 
   return (
-    <div className="flex flex-col justify-center items-center mt-10">
+    <div className="flex flex-col  justify-center items-center mt-5">
       <DashboardWithBills />
     </div>
   );

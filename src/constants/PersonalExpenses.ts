@@ -6,3 +6,4 @@ export const personalExpenses = [
   { id: crypto.randomUUID(), name: "Education" },
   { id: crypto.randomUUID(), name: "Other" },
 ];
+

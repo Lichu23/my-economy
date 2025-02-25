@@ -7,7 +7,6 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { personalExpenses } from "@/constants/PersonalExpenses";
-import { SelectGroup } from "@radix-ui/react-select";
 
 type Props = {
   control: Control<any>;
