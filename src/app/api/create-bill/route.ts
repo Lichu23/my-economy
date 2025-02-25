@@ -11,7 +11,6 @@ export async function POST(req: NextRequest) {
 
     // Insertar en la base de datos sin el id
 
-      console.log(newBillData)
   
       const newBill = await db.insert(bills).values(newBillData).returning();
   
@@ -21,3 +20,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Internal server error" }, { status: 500 });
     }
   }
+
+
+ 

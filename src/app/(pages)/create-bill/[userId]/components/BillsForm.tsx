@@ -12,6 +12,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import SelectBillType from "./SelectBillType";
+import { ToastContainer, toast } from 'react-toastify';
+import { Loader2 } from "lucide-react";
 
 type BillFormProps = {
   user: selectUserSchemaType;
@@ -20,8 +22,9 @@ type BillFormProps = {
 
 export default function BillsForm({ user, bill }: BillFormProps) {
   const [isSuccess, setIsSucces] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
   console.log(isSuccess);
-  const { toast } = useToast();
   const defaultValues: Omit<insertBillSchemaType, "id"> = {
     userId: bill?.userId ?? user.id,
     titleBill: bill?.titleBill ?? "",
@@ -41,10 +44,12 @@ export default function BillsForm({ user, bill }: BillFormProps) {
   });
 
   async function onSubmit(data: insertBillSchemaType) {
+    setIsLoading(true)
+
     try {
       const { id, ...billDataWithoutId } = data;
 
-      const response = await fetch("/api/bills", {
+      const response = await fetch("/api/create-bill", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -57,11 +62,11 @@ export default function BillsForm({ user, bill }: BillFormProps) {
       }
 
       const result = await response.json();
+      setIsLoading(false)
 
       // Mostrar toast de éxito después de que el bill se haya creado correctamente
-      toast({
-        title: "Bill created successfully",
-        description: `Bill #${result.id} has been created.`,
+      toast("Bill created successfully", {
+        type: "success"
       });
 
       setIsSucces(true);
@@ -76,15 +81,14 @@ export default function BillsForm({ user, bill }: BillFormProps) {
     } catch (error) {
       console.error("Error:", error);
 
-      toast({
-        title: "Error",
-        description: "There was an issue creating the bill.",
+      toast("Something is wrong creating bill", {
+        type: "error"
       });
     }
   }
 
   return (
-    <div className="flex flex-col gap-1 sm:px-8">
+    <div className="flex flex-col items-center mt-10 gap-1 sm:px-8">
       <div>
         <h2 className="text-2xl font-bold">
           {bill?.id ? "Edit" : "Create"} Bill{" "}
@@ -92,7 +96,7 @@ export default function BillsForm({ user, bill }: BillFormProps) {
         </h2>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="w-[400px] h-full">
         <div className="flex flex-col justify-start  gap-5">
           <InputBills
             name="titleBill"
@@ -109,9 +113,18 @@ export default function BillsForm({ user, bill }: BillFormProps) {
             error={errors.billValue}
           />
           <SelectBillType control={control} />
-          <Button variant="default" className="hover:bg-black hover:text-white rounded-xl" type="submit">Submit</Button>
-        </div>
+          {isLoading ? (
+            <Button disabled>
+              <Loader2 className="animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button variant="outline" type="submit">
+              Submit
+            </Button>
+          )}        </div>
       </form>
+      <ToastContainer/>
     </div>
   );
 }
