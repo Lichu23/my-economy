@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -23,6 +23,7 @@ export default function ClientDashboard({ bills }: Props) {
 
   const deleteBill = async (id: number) => {
     try {
+      setIsLoading(true);
       const res = await fetch(`/api/delete-bill/${id}`, {
         method: "DELETE",
       });
@@ -32,6 +33,8 @@ export default function ClientDashboard({ bills }: Props) {
       }
 
       setLocalBills((prevBills) => prevBills.filter((bill) => bill.id !== id));
+      setIsLoading(false);
+
       toast("Bill deleted successfully", {
         progress: undefined,
         hideProgressBar: false,
@@ -41,14 +44,15 @@ export default function ClientDashboard({ bills }: Props) {
       });
     } catch (error) {
       console.error("Error deleting bill:", error);
-      toast("Bill deleted successfully", {
+      setIsLoading(false);
+      toast("Error deleting bill", {
         progress: undefined,
         hideProgressBar: false,
         position: "top-right",
         theme: "light",
         type: "error",
       });
-      throw new Error("Error deleting bill:", error!);
+      throw new Error("Error deleting bill", error!);
     }
   };
 
@@ -69,32 +73,28 @@ export default function ClientDashboard({ bills }: Props) {
               className="flex flex-col rounded-xl border p-5 gap-y-2"
               key={bill.id}
             >
-              <div className="flex justify-between">
               <p>{bill.titleBill}</p>
               <p>${bill.billValue}</p>
-              </div>
               <p className="text-orange-500">{bill.billType}</p>
               <div className="flex gap-2 justify-between">
-              {isLoading ? (
-            <Button  disabled>
-              <Loader2 className="animate-spin" />
-              Please wait
-            </Button>
-          ) : (
-            <Button className="bg-red-600 hover:bg-red-500 text-white rounded-xl"  type="submit">
-              Delete
-            </Button>
-          )}
+                <Button
+                  className="bg-sky-600 hover:bg-sky-500 text-white rounded-xl"
+                  type="submit"
+                >
+                  Edit
+                </Button>
+
                 {isLoading ? (
-            <Button disabled>
-              <Loader2 className="animate-spin" />
-              Please wait
-            </Button>
-          ) : (
-            <Button className="bg-sky-600 hover:bg-sky-500 text-white rounded-xl"  type="submit">
-            Delete
-          </Button>
-          )}
+                  <Button disabled>Delete</Button>
+                ) : (
+                  <Button
+                    onClick={() => deleteBill(bill.id)}
+                    className="bg-red-600 hover:bg-red-500 text-white rounded-xl"
+                    type="submit"
+                  >
+                    Delete
+                  </Button>
+                )}
               </div>
             </ul>
           ))}
