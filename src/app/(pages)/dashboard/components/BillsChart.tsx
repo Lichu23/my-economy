@@ -1,7 +1,7 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { Cell, LabelList, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import {
   Card,
@@ -11,12 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   chartData: { billType: string; billTotal: number }[];
@@ -24,39 +19,7 @@ type Props = {
 
 const COLORS = ["#FFA500", "#FFD700", "#008000", "#808080", "#FF0000"]; // Colores para cada categoría
 
-// const chartData = [
-//   { browser: "food", visitors: 275, fill: "orange" },
-//   { browser: "transport", visitors: 200, fill: "yellow" },
-//   { browser: "health", visitors: 187, fill: "green" },
-//   { browser: "entreteinment", visitors: 173, fill: "gray" },
-//   { browser: "other", visitors: 90, fill: "red" },
-// ];
 
-// const chartConfig = {
-//   visitors: {
-//     label: "Visitors",
-//   },
-//   food: {
-//     label: "food",
-//     color: "hsl(var(--chart-1))",
-//   },
-//   transport: {
-//     label: "transport",
-//     color: "hsl(var(--chart-2))",
-//   },
-//   health: {
-//     label: "health",
-//     color: "hsl(var(--chart-3))",
-//   },
-//   entreteinment: {
-//     label: "entreteinment",
-//     color: "hsl(var(--chart-4))",
-//   },
-//   other: {
-//     label: "other",
-//     color: "hsl(var(--chart-5))",
-//   },
-// } satisfies ChartConfig;
 
 export function BillsChart({ chartData }: Props) {
   return (
@@ -68,14 +31,14 @@ export function BillsChart({ chartData }: Props) {
       <CardContent className="flex-1 pb-0">
       <ResponsiveContainer width="100%" height={300}>
           <PieChart>
-            <Tooltip formatter={(value) => `$${value}`} />
+            <Tooltip formatter={(value) => `${formatPrice(Number(value))}`} />
             <Pie
               data={chartData}
               dataKey="billTotal"
               nameKey="billType"
               cx="50%"
               cy="50%"
-              outerRadius={100}
+              outerRadius={110}
               fill="#8884d8"
               label={({ name }) => `${name}`}
             >

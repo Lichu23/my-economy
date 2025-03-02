@@ -1,0 +1,1 @@
+ALTER TABLE "bills" ADD COLUMN "bill_value" text NOT NULL;

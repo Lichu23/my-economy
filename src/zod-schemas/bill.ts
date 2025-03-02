@@ -5,7 +5,7 @@ import { z } from "zod";
 export const insertBillSchema = createInsertSchema(bills, {
     id: z.union([z.number(), z.literal("(New)")]).optional(),
     titleBill: (schema) => schema.min(1, "title is required"),
-    billValue: (schema) => schema.min(1, "value is required"),
+    billValue: (schema) => schema.min(0, "value is required"),  // Convertir automáticamente a número
     billType: (schema) => schema.min(1, "value is required"),
 
 });

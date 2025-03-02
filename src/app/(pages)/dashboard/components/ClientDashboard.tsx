@@ -5,6 +5,7 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import SelectFilter from "./SelectFilter";
 import { Loader2 } from "lucide-react";
+import { formatPrice } from "@/utils/formatPrice";
 
 type Bill = {
   id: number;
@@ -74,7 +75,7 @@ export default function ClientDashboard({ bills }: Props) {
               key={bill.id}
             >
               <p>{bill.titleBill}</p>
-              <p>${bill.billValue}</p>
+              <p>{formatPrice(Number(bill.billValue))}</p>
               <p className="text-orange-500">{bill.billType}</p>
               <div className="flex gap-2 justify-between">
                 <Button

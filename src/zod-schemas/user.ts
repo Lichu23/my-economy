@@ -5,7 +5,6 @@ export const insertUserSchema = createInsertSchema(user, {
   firstName: (schema) => schema.min(1, "First Name is required"),
   lastName: (schema) => schema.min(1, "Last Name is required"),
   email: (schema) => schema.email("Invalid email address"),
-  bills: (schema) => schema.min(1,"Is required"),
 });
 
 export const selectUserSchema = createSelectSchema(user)

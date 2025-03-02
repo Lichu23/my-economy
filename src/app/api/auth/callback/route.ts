@@ -1,70 +1,42 @@
+import { NextResponse } from "next/server";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { db } from "@/db";
 import { user } from "@/db/schema";
-import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { eq } from "drizzle-orm";
-import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET() {
+  console.log("🚀 Callback ejecutado"); // 👈 Verificar si esta función corre
+
   try {
-    // Obtener sesión del usuario
+    // Obtener la sesión del usuario autenticado en Kinde
     const { getUser } = getKindeServerSession();
     const kindeUser = await getUser();
+    console.log("🔍 Usuario desde Kinde:", kindeUser);
 
-    if (!kindeUser || !kindeUser.id) {
-      return NextResponse.json(
-        { error: "Usuario no autenticado" },
-        { status: 401 }
-      );
+
+    if (!kindeUser || !kindeUser.email) {
+      return NextResponse.json({ error: "User not authenticated" }, { status: 401 });
     }
 
-    const firstName = kindeUser.given_name || "";
-    const lastName = kindeUser.family_name || "";
-    const email = kindeUser.email || "";
+    // Verificar si el usuario ya existe en la base de datos
+    const existingUser = await db
+      .select()
+      .from(user)
+      .where(eq(user.email, kindeUser.email))
+      .limit(1);
 
-    if (!email) {
-      return NextResponse.json(
-        { error: "El usuario no tiene un email válido" },
-        { status: 400 }
-      );
-    }
-
-    // Verificar si el usuario ya existe
-    const existingUser = await db.query.user.findFirst({
-      where: eq(user.email, email),
-    });
-
-    if (existingUser) {
-      return NextResponse.json({
-        message: "Usuario ya existe",
-        user: existingUser,
+    if (existingUser.length === 0) {
+      // Insertar nuevo usuario en la base de datos
+      await db.insert(user).values({
+        firstName: kindeUser.given_name ?? "NoName",
+        lastName: kindeUser.family_name ?? "NoLastName",
+        email: kindeUser.email,
       });
     }
 
-    // Insertar nuevo usuario
-    const [newUser] = await db
-      .insert(user)
-      .values({
-        firstName,
-        lastName,
-        email,
-      })
-      .returning();
-
-    return NextResponse.json({ message: "Usuario creado", user: newUser });
-  
-  } catch (error: any) {
-    console.error("Error al manejar el usuario:", error);
-
-    if (error.code === "23505") {
-      return NextResponse.json(
-        { error: "El usuario ya existe en la base de datos" },
-        { status: 409 }
-      );
-    }
-
-    return NextResponse.json(
-      { error: "Error interno del servidor" },
-      { status: 500 }
-    );
+    return NextResponse.redirect("/");
+  } catch (error) {
+    console.error("Error handling login:", error);
+    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
   }
 }
