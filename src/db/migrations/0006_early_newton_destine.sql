@@ -1,0 +1,1 @@
+ALTER TABLE bills ALTER COLUMN bill_value TYPE NUMERIC USING bill_value::numeric;

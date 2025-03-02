@@ -11,9 +11,10 @@ export async function POST(req: NextRequest) {
 
     // Insertar en la base de datos sin el id
 
-  
+      
       const newBill = await db.insert(bills).values(newBillData).returning();
-  
+      
+
       return NextResponse.json({ message: "Bill created", bill: newBill[0] }, { status: 201 });
     } catch (error) {
       console.error("Error creating bill:", error);

@@ -43,6 +43,34 @@
       "when": 1740357125909,
       "tag": "0005_soft_argent",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1740783036197,
+      "tag": "0006_early_newton_destine",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1740787280565,
+      "tag": "0007_nasty_shadow_king",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1740859508153,
+      "tag": "0008_chief_randall_flagg",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1740859731298,
+      "tag": "0009_steady_celestials",
+      "breakpoints": true
     }
   ]
 }

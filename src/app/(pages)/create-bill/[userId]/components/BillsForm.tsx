@@ -1,4 +1,6 @@
 "use client";
+
+import { Button } from "@/components/ui/button";
 import {
   insertBillSchema,
   type insertBillSchemaType,
@@ -6,15 +8,13 @@ import {
 } from "@/zod-schemas/bill";
 import { selectUserSchemaType } from "@/zod-schemas/user";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import InputBills from "./InputBIlls";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
-import SelectBillType from "./SelectBillType";
-import { ToastContainer, toast } from 'react-toastify';
 import { Loader2 } from "lucide-react";
-
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { ToastContainer, toast } from 'react-toastify';
+import InputBills from "./InputBIlls";
+import SelectBillType from "./SelectBillType";
+import { formatPrice } from "@/utils/formatPrice";
 type BillFormProps = {
   user: selectUserSchemaType;
   bill?: selectBillSchemaType;
@@ -24,11 +24,10 @@ export default function BillsForm({ user, bill }: BillFormProps) {
   const [isSuccess, setIsSucces] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
-  console.log(isSuccess);
   const defaultValues: Omit<insertBillSchemaType, "id"> = {
     userId: bill?.userId ?? user.id,
     titleBill: bill?.titleBill ?? "",
-    billValue: bill?.billValue ?? "",
+    billValue:   bill?.billValue ?? "",
     billType: bill?.billType ?? "",
   };
 
