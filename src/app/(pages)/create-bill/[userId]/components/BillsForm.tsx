@@ -11,10 +11,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import InputBills from "./InputBIlls";
 import SelectBillType from "./SelectBillType";
-import { formatPrice } from "@/utils/formatPrice";
+import { useRouter } from "next/navigation";
+
 type BillFormProps = {
   user: selectUserSchemaType;
   bill?: selectBillSchemaType;
@@ -23,11 +24,12 @@ type BillFormProps = {
 export default function BillsForm({ user, bill }: BillFormProps) {
   const [isSuccess, setIsSucces] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  
-  const defaultValues: Omit<insertBillSchemaType, "id"> = {
+  const router = useRouter();
+  const defaultValues: insertBillSchemaType = {
+    id: bill?.id ?? undefined,
     userId: bill?.userId ?? user.id,
     titleBill: bill?.titleBill ?? "",
-    billValue:   bill?.billValue ?? "",
+    billValue: bill?.billValue ?? "",
     billType: bill?.billType ?? "",
   };
 
@@ -43,45 +45,45 @@ export default function BillsForm({ user, bill }: BillFormProps) {
   });
 
   async function onSubmit(data: insertBillSchemaType) {
-    setIsLoading(true)
+    setIsLoading(true);
 
     try {
-      const { id, ...billDataWithoutId } = data;
+      const id = data.id;
 
-      const response = await fetch("/api/create-bill", {
-        method: "POST",
+      const url = id ? `/api/edit-bill/${id}` : "/api/create-bill";
+      const method = id ? "PUT" : "POST";
+
+      const response = await fetch(url, {
+        method,
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(billDataWithoutId),
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
         throw new Error("Error creating bill");
       }
 
-      const result = await response.json();
-      setIsLoading(false)
+      setIsLoading(false);
 
       // Mostrar toast de éxito después de que el bill se haya creado correctamente
-      toast("Bill created successfully", {
-        type: "success"
+      toast(id ? "Bill updated successfully" : "Bill created successfully", {
+        type: "success",
       });
 
       setIsSucces(true);
 
-      setTimeout(() => {
-        setIsSucces(false);
-      }, 2000);
+      if (url ? router.push("/dashboard") : "") 
+        
+      setIsSucces(false);
 
       reset();
-
-      console.log("Bill created:", result);
     } catch (error) {
       console.error("Error:", error);
 
       toast("Something is wrong creating bill", {
-        type: "error"
+        type: "error",
       });
     }
   }
@@ -121,9 +123,10 @@ export default function BillsForm({ user, bill }: BillFormProps) {
             <Button variant="outline" type="submit">
               Submit
             </Button>
-          )}        </div>
+          )}{" "}
+        </div>
       </form>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }

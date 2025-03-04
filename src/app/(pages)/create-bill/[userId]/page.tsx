@@ -3,7 +3,7 @@ import { getUser } from "@/lib/queries/getUser";
 import BillsForm from "./components/BillsForm";
 
 
-export default async function BillsFormPage({
+export default async function CreateBillsFormPage({
   params,
 }: {
   params: { userId?: string };
