@@ -4,15 +4,10 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import SelectFilter from "./SelectFilter";
-import { Loader2 } from "lucide-react";
 import { formatPrice } from "@/utils/formatPrice";
-
-type Bill = {
-  id: number;
-  titleBill: string;
-  billValue: string;
-  billType: string;
-};
+import { Bill } from "@/types/Bill";
+import { useRouter } from "next/navigation";
+import CreateBillButton from "@/components/ui/create-bill-button/CreateBillButton";
 
 type Props = {
   bills: Bill[];
@@ -21,7 +16,7 @@ export default function ClientDashboard({ bills }: Props) {
   const [filter, setFilter] = useState<string | null>("all");
   const [localBills, setLocalBills] = useState<Bill[]>(bills);
   const [isLoading, setIsLoading] = useState(false);
-
+  const router = useRouter()
   const deleteBill = async (id: number) => {
     try {
       setIsLoading(true);
@@ -68,7 +63,7 @@ export default function ClientDashboard({ bills }: Props) {
       {filteredBills.length === 0 ? (
         <p className="text-center mt-10 text-gray-500">No bills found</p>
       ) : (
-        <div className="flex flex-col lg:flex-row md:gap-10 gap-y-2">
+        <div className="flex flex-col  md:gap-10 gap-y-2">
           {filteredBills.map((bill) => (
             <ul
               className="flex flex-col rounded-xl border p-5 gap-y-2"
@@ -81,6 +76,7 @@ export default function ClientDashboard({ bills }: Props) {
                 <Button
                   className="bg-sky-600 hover:bg-sky-500 text-white rounded-xl"
                   type="submit"
+                  onClick={() => {router.push(`edit-bill/${bill.id}`)}}
                 >
                   Edit
                 </Button>

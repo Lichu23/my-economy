@@ -1,8 +1,8 @@
-import { getBills } from "@/lib/queries/getBills";
 import { getAuthenticatedUser } from "@/utils/getAuthKindeUser";
 import ClientDashboard from "./ClientDashboard";
 import { BillsChart } from "./BillsChart";
-import { formatPrice } from "@/utils/formatPrice";
+import { getBills } from "@/lib/queries/getBills";
+import CreateBillButton from "@/components/ui/create-bill-button/CreateBillButton";
 
 export default async function DashboardWithBills() {
   const { user, error } = await getAuthenticatedUser();
