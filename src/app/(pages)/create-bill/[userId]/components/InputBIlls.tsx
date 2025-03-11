@@ -24,7 +24,7 @@ export default function InputBills({
         name={name}
         control={control}
         render={({field}) => 
-        <Input id={name} type={type} {...field}  />
+        <Input className="rounded-xl" id={name} type={type} {...field}  />
         }
     />
     {error?.message && <p className="text-lg text-red-500 font-semibold">{error.message}</p>}
