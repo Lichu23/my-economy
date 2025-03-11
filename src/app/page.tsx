@@ -15,7 +15,7 @@ export default function Home() {
           </p>
 
           <div className="flex justify-center mt-5 gap-5 mb-5">
-          <CustomButton
+            <CustomButton
               title="Sign In"
               className="text-lg bg-black text-white hover:bg-white hover:shadow-lg hover:text-black rounded-xl"
               href="/api/auth/login"
@@ -27,8 +27,32 @@ export default function Home() {
               href="/api/auth/login"
             />
           </div>
+        </div>
 
-          <Image src="/myEconomy-steps.png" alt="tutorial" width={1000} height={1500}  />
+        <div className="w-full mt-5">
+          <div className="flex gap-4 px-10">
+            <Image
+              src="/steps/first-step.png"
+              alt="tutorial steps"
+              width={900}
+              height={900}
+              className=" w-1/3 h-auto object-contain"
+            />
+            <Image
+              src="/steps/second-step.png"
+              alt="tutorial steps"
+              width={900}
+              height={900}
+              className="w-1/3 h-auto object-contain"
+            />
+            <Image
+              src="/steps/third-step.png"
+              alt="tutorial steps"
+              width={900}
+              height={900}
+              className="w-1/3 h-auto object-contain"
+            />
+          </div>
         </div>
       </div>
     </main>
