@@ -92,8 +92,8 @@ export default function BillsForm({ user, bill }: BillFormProps) {
     <div className="flex flex-col items-center mt-10 gap-1 sm:px-8">
       <div>
         <h2 className="text-2xl font-bold">
-          {bill?.id ? "Edit" : "Create"} Bill{" "}
-          {bill?.id ? `# ${bill?.id}` : "Form"}
+          {bill?.id ? "Edit" : "Create new"} Expense{" "}
+          {bill?.id ? `# ${bill?.id}` : ""}
         </h2>
       </div>
 
@@ -102,14 +102,14 @@ export default function BillsForm({ user, bill }: BillFormProps) {
           <InputBills
             name="titleBill"
             control={control}
-            label="Title Bill"
+            label="Title Expense"
             type="text"
             error={errors.titleBill}
           />
           <InputBills
             name="billValue"
             control={control}
-            label="Bill Value"
+            label="Expense Value"
             type="text"
             error={errors.billValue}
           />
@@ -120,7 +120,7 @@ export default function BillsForm({ user, bill }: BillFormProps) {
               Please wait
             </Button>
           ) : (
-            <Button variant="outline" type="submit">
+            <Button className="rounded-xl text-base font-semibold bg-black text-white hover:bg-white hover:text-black" variant="outline" type="submit">
               Submit
             </Button>
           )}{" "}

@@ -1,4 +1,5 @@
 import CustomButton from "@/components/ui/custom-button/CustomButton";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -13,7 +14,7 @@ export default function Home() {
             finances with graphs and make better decisions.
           </p>
 
-          <div className="flex justify-center mt-5 gap-5">
+          <div className="flex justify-center mt-5 gap-5 mb-5">
           <CustomButton
               title="Sign In"
               className="text-lg bg-black text-white hover:bg-white hover:shadow-lg hover:text-black rounded-xl"
@@ -26,6 +27,8 @@ export default function Home() {
               href="/api/auth/login"
             />
           </div>
+
+          <Image src="/myEconomy-steps.png" alt="tutorial" width={1000} height={1500}  />
         </div>
       </div>
     </main>
