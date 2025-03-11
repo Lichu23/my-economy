@@ -7,7 +7,6 @@ import SelectFilter from "./SelectFilter";
 import { formatPrice } from "@/utils/formatPrice";
 import { Bill } from "@/types/Bill";
 import { useRouter } from "next/navigation";
-import CreateBillButton from "@/components/ui/create-bill-button/CreateBillButton";
 
 type Props = {
   bills: Bill[];
