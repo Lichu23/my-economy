@@ -20,6 +20,7 @@ export default async function DashboardWithBills() {
     return <p className="text-center mt-10 text-gray-500">No bills found</p>;
   }
 
+  const totalBillsAmount = bills.reduce((acc, bill) => acc + parseFloat(bill.billValue) || 0 , 0)
 
   const groupedBills = bills.reduce((acc, bill) => {
     const billValue = parseFloat(bill.billValue) || 0;
@@ -34,8 +35,8 @@ export default async function DashboardWithBills() {
   }))
 
   return (
-    <div className="flex max-md:flex-col">
-      <BillsChart chartData={chartData}/>
+    <div className="flex justify-center mt-10 md:items-start items-center max-md:flex-col">
+      <BillsChart chartData={chartData} totalBillsAmount={totalBillsAmount}/>
       <ClientDashboard bills={bills} />
     </div>
   );

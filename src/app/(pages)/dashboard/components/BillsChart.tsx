@@ -1,6 +1,5 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 import {
@@ -15,17 +14,18 @@ import { formatPrice } from "@/utils/formatPrice";
 
 type Props = {
   chartData: { billType: string; billTotal: number }[];
+  totalBillsAmount: number
 };
 
 const COLORS = ["#FFA500", "#FFD700", "#008000", "#808080", "#FF0000"]; // Colores para cada categoría
 
 
 
-export function BillsChart({ chartData }: Props) {
+export function BillsChart({ chartData, totalBillsAmount }: Props) {
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col  mt-5">
       <CardHeader className="items-center pb-0">
-        <CardTitle>Pie Chart - Label List</CardTitle>
+        <CardTitle>Pie Chart - Expense List</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0">
@@ -50,11 +50,9 @@ export function BillsChart({ chartData }: Props) {
         </ResponsiveContainer>
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
-        <div className="flex items-center gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
+     
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+         <p className="md:text-2xl text-xl font-semibold">Total: {formatPrice(totalBillsAmount)}</p> 
         </div>
       </CardFooter>
     </Card>
