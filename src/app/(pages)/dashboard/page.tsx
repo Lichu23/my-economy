@@ -16,7 +16,7 @@ export default async function Dashboard() {
   if(bills.length === 0 ) return <DashboardWithoutBills />
 
   return (
-    <div className="flex flex-col  justify-center items-center mt-10 max-md:mt-5">
+    <div>
       <DashboardWithBills />
     </div>
   );
